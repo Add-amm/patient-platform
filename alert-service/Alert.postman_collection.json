@@ -1,0 +1,55 @@
+{
+  "info": {
+    "_postman_id": "7a6ef781-371b-44ee-b48b-98cb1c17a0fa",
+    "name": "Alert",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "44243690",
+    "_collection_link": "https://go.postman.co/collection/44243690-7a6ef781-371b-44ee-b48b-98cb1c17a0fa?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GetAlerts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/api/alerts/PATIENT_001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "api",
+            "alerts",
+            "PATIENT_001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetAlertsBySev",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/api/alerts/PATIENT_001/severity/CRITICAL",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "api",
+            "alerts",
+            "PATIENT_001",
+            "severity",
+            "CRITICAL"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

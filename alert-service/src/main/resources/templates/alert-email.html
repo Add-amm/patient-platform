@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Alerte Médicale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 620px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+        .header {
+            padding: 24px 32px;
+            color: #ffffff;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 1px;
+        }
+        .header .badge {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 14px;
+            border: 2px solid #ffffff;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .body {
+            padding: 28px 32px;
+            color: #333333;
+        }
+        .alert-box {
+            border-left: 5px solid;
+            padding: 16px 20px;
+            border-radius: 4px;
+            margin-bottom: 24px;
+            background-color: #fafafa;
+        }
+        .alert-box p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+        .info-table td {
+            padding: 10px 12px;
+            font-size: 14px;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .info-table td:first-child {
+            color: #666666;
+            width: 45%;
+            font-weight: bold;
+        }
+        .info-table td:last-child {
+            color: #222222;
+        }
+        .value-highlight {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            padding: 16px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            border: 1px solid #eeeeee;
+        }
+        .footer {
+            background-color: #f0f0f0;
+            padding: 16px 32px;
+            font-size: 12px;
+            color: #888888;
+            text-align: center;
+            border-top: 1px solid #dddddd;
+        }
+        .footer a {
+            color: #555555;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- En-tête coloré selon la sévérité -->
+    <div class="header" th:style="'background-color:' + ${severityColor}">
+        <h1>🏥 Alerte Médicale Automatique</h1>
+        <span class="badge" th:text="${severityLabel}">ALERTE</span>
+    </div>
+
+    <div class="body">
+
+        <!-- Message principal de l'alerte -->
+        <div class="alert-box" th:style="'border-left-color:' + ${severityColor}">
+            <p th:text="${message}">Message d'alerte ici.</p>
+        </div>
+
+        <!-- Valeur mesurée en grand -->
+        <div class="value-highlight" th:style="'color:' + ${severityColor}">
+            <span th:text="${measuredValue}">0.0</span>
+            <span th:text="' ' + ${unit}"></span>
+        </div>
+
+        <!-- Tableau des détails -->
+        <table class="info-table">
+            <tr>
+                <td>Patient</td>
+                <td th:text="${patientId}">PAT-001</td>
+            </tr>
+            <tr>
+                <td>Type de mesure</td>
+                <td th:text="${vitalType}">Fréquence cardiaque</td>
+            </tr>
+            <tr>
+                <td>Sévérité</td>
+                <td>
+                    <strong th:text="${severityLabel}"
+                            th:style="'color:' + ${severityColor}">CRITIQUE</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>Règle déclenchée</td>
+                <td th:text="${ruleName}">HEART_RATE_CRITICAL_HIGH</td>
+            </tr>
+            <tr>
+                <td>Heure de déclenchement</td>
+                <td th:text="${triggeredAt}">01/01/2025 à 12:00:00</td>
+            </tr>
+        </table>
+
+        <p style="font-size:13px; color:#555555;">
+            Cette notification a été générée automatiquement par la
+            <strong>Plateforme de Suivi des Patients Chroniques</strong>.
+            Veuillez vérifier l'état du patient et prendre les mesures appropriées
+            selon le protocole en vigueur.
+        </p>
+
+    </div>
+
+    <div class="footer">
+        <p>
+            Plateforme de Suivi des Patients Chroniques &mdash; Système d'alerte automatique<br/>
+            Ce message est confidentiel et destiné exclusivement au personnel médical habilité.<br/>
+            <a href="#">Accéder au tableau de bord</a>
+        </p>
+    </div>
+
+</div>
+</body>
+</html>

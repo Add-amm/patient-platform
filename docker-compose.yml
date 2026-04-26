@@ -1,0 +1,80 @@
+services:
+
+  # ── RabbitMQ (Message Broker) ────────────────────────────────────────────────
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"       # AMQP
+      - "15672:15672"     # Management UI -> http://localhost:15672 (guest/guest)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - chronic-network
+
+  # ── vitals-ingestion-service ────────────────────────────────────────────────
+  vitals-ingestion-service:
+    build:
+      context: ./vitals-ingestion-service
+      dockerfile: Dockerfile
+    container_name: vitals-ingestion-service
+    ports:
+      - "8081:8081"
+    environment:
+      RABBITMQ_HOST: rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - chronic-network
+    restart: on-failure
+
+  # ── rules-engine-service ────────────────────────────────────────────────────
+  rules-engine-service:
+    build:
+      context: ./rules-engine-service
+      dockerfile: Dockerfile
+    container_name: rules-engine-service
+    ports:
+      - "8082:8082"
+    environment:
+      RABBITMQ_HOST: rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - chronic-network
+    restart: on-failure
+
+  # ── alert-service ────────────────────────────────────────────────────────────
+  alert-service:
+    build:
+      context: ./alert-service
+      dockerfile: Dockerfile
+    container_name: alert-service
+    ports:
+      - "8083:8083"
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      # ── Configurer votre serveur SMTP ici ──────────────────────────────────
+      MAIL_HOST: smtp.gmail.com
+      MAIL_PORT: 587
+      MAIL_USERNAME: your-mail
+      MAIL_PASSWORD: your-code
+      MAIL_FROM: alertes@clinique-chronique.fr
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - chronic-network
+    restart: on-failure
+
+networks:
+  chronic-network:
+    driver: bridge
