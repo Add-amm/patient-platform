@@ -22,12 +22,12 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8081/api/vitals",
+          "raw": "http://localhost:8084/api/vitals",
           "protocol": "http",
           "host": [
             "localhost"
           ],
-          "port": "8081",
+          "port": "8084",
           "path": [
             "api",
             "vitals"
@@ -54,12 +54,12 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8081/api/vitals/PATIENT_001",
+          "raw": "http://localhost:8084/api/vitals/PATIENT_001",
           "protocol": "http",
           "host": [
             "localhost"
           ],
-          "port": "8081",
+          "port": "8084",
           "path": [
             "api",
             "vitals",

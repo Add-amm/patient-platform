@@ -25,7 +25,7 @@ services:
       dockerfile: Dockerfile
     container_name: vitals-ingestion-service
     ports:
-      - "8081:8081"
+      - "8084:8084"
     environment:
       RABBITMQ_HOST: rabbitmq
     depends_on:
